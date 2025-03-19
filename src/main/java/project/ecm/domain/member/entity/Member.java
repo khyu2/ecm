@@ -63,4 +63,8 @@ public class Member extends BaseTimeEntity {
                 .role(MemberRole.USER)
                 .build();
     }
+
+    public void encodePassword(String password) {
+        this.password = password;
+    }
 }

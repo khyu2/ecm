@@ -32,7 +32,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     private final MemberRepository memberRepository;
     private final GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
 
-    private static final List<String> NO_CHECK_URLS = List.of("/login");
+    private static final List<String> NO_CHECK_URLS = List.of("/api/login", "/api/auth/refresh");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

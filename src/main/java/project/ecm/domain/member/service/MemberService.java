@@ -2,6 +2,7 @@ package project.ecm.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.ecm.domain.member.dto.MemberSignUpDto;
 import project.ecm.domain.member.entity.Member;
@@ -15,6 +16,7 @@ import project.ecm.global.exception.BaseException;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public void signup(MemberSignUpDto memberSignUpDto) {
         if (memberRepository.existsByEmail(memberSignUpDto.email())) {
@@ -22,6 +24,8 @@ public class MemberService {
         }
 
         Member member = Member.of(memberSignUpDto);
+
+        member.encodePassword(passwordEncoder.encode(memberSignUpDto.password()));
 
         memberRepository.save(member);
     }

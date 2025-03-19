@@ -64,7 +64,7 @@ public class SecurityConfig {
                                 ).permitAll()
                         .requestMatchers(
                                 "/login",
-                                "/v1/auth/**"
+                                "/auth/**"
                                 ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/member/").permitAll()
                         .anyRequest().authenticated())

@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.util.List;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -17,10 +19,19 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
     private static final int WARNING_QUERY_COUNT = 10;
 
+    private static final List<String> EXCLUDE_PATHS = List.of(
+            "/api/swagger-ui", "/api/v3/api-docs"
+    );
+
     private final ApiQueryCounter queryCounter;
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        String requestUri = request.getRequestURI();
+        if (EXCLUDE_PATHS.stream().anyMatch(requestUri::startsWith)) {
+            return;
+        }
+
         final int queryCount = queryCounter.getCount();
 
         log.info(QUERY_COUNT_LOG_FORMAT, request.getMethod(), request.getRequestURI(), queryCount);

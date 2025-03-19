@@ -29,8 +29,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         String accessToken = jwtService.createAccessToken(email);
         String refreshToken = jwtService.createRefreshToken(email);
 
-        refreshTokenService.getRefreshToken(email)
-                .ifPresent(token -> refreshTokenService.saveRefreshToken(email, refreshToken));
+        refreshTokenService.saveRefreshToken(email, refreshToken);
 
         response.setHeader(accessHeader, BEARER + accessToken);
         response.setHeader(refreshHeader, BEARER + refreshToken);
