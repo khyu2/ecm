@@ -14,6 +14,7 @@ public enum BaseExceptionType implements ExceptionType {
     ARGUMENT_NOT_VALID(BAD_REQUEST, "401", "요청 인자가 잘못되었습니다."),
     INVALID_REFRESH_TOKEN(UNAUTHORIZED, "401", "리프레시 토큰이 유효하지 않습니다."),
     NOT_VALID_METHODS(METHOD_NOT_ALLOWED, "401", "지원하지 않는 메서드입니다."),
+    UNABLE_TO_SEND_EMAIL(INTERNAL_SERVER_ERROR, "500", "이메일을 발송할 수 없습니다."),
     ;
 
     private final HttpStatus httpStatus;

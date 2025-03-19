@@ -10,6 +10,8 @@ import project.ecm.domain.member.exception.MemberExceptionType;
 import project.ecm.domain.member.repository.MemberRepository;
 import project.ecm.global.exception.BaseException;
 
+import java.util.regex.Pattern;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -38,8 +40,15 @@ public class MemberService {
         log.info("delete");
     }
 
-    public void validateEmail(String email) {
-        log.info("validateEmail");
+    public boolean validateEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        if (email == null || !pattern.matcher(email).matches()) {
+            return false;
+        }
+
+        return !memberRepository.existsByEmail(email);
     }
 
 }
